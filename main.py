@@ -1,9 +1,8 @@
+"""## Setup"""
 # This Python file uses the following encoding: utf-8
 import sys
 import os
-from PySide2 import QtCore
-from PySide2.QtGui import QImage, QPixmap
-from PySide2.QtWidgets import QApplication, QGraphicsScene, QGraphicsView, QGridLayout, QLabel, QWidget
+from PySide2.QtWidgets import QApplication, QWidget
 from PySide2.QtCore import QFile
 from PySide2.QtUiTools import QUiLoader
 from pynput.keyboard import Key, Listener
@@ -13,6 +12,7 @@ import sqlite3
 import matplotlib.pyplot as plt
 import math
 
+"""## Utils"""
 class Keyboard(QWidget):
     def __init__(self):
         super(Keyboard, self).__init__()
@@ -26,6 +26,9 @@ class Keyboard(QWidget):
         self.mode = ""
     
     def resetParameters(self):
+        """
+        reset user parameters
+        """
         self.hold = False
         self.start_time_release = 0
         self.intervals_beetwen_keystrokes = []
@@ -43,17 +46,21 @@ class Keyboard(QWidget):
             on_press=self.on_press, on_release=self.on_release)
 
     def resetAll(self):
+        """
+        clear the text of all textBoxes
+        """
         self.resetParameters()
         self.mainWin.plainTextEdit.clear()
-        scene = QGraphicsScene()
-        scene.addPixmap((QPixmap('blank.png')).scaled(450, 260, QtCore.Qt.KeepAspectRatio))
-        self.mainWin.graphicsView.setScene(scene)
+        
         self.mainWin.textEdit.clear()
         self.mainWin.label_2.setText(
             'Witaj! Podaj nazwę użytkownika i wybierz zaloguj lub nowy użytkownik')
         self.mainWin.label_3.setText('Zgodność XX% z użytkownik YYYYYY.')
 
     def loadUi(self):
+        """
+        load GUI
+        """
         loader = QUiLoader()
         path = os.path.join(os.path.dirname(__file__), "form.ui")
         ui_file = QFile(path)
@@ -62,7 +69,9 @@ class Keyboard(QWidget):
         ui_file.close()
 
     def login(self):
-        
+        """
+        log in to the system
+        """
         self.mode = 'log'
         self.resetParameters()
         used = True
@@ -77,13 +86,16 @@ class Keyboard(QWidget):
                 "W Szczebrzeszynie chrząszcz brzmi w trzcinie. \nI Szczebrzeszyn z tego słynie.")
             self.mainWin.plainTextEdit.clear()
             self.mainWin.label_2.setText(
-                "Przepisz tekst i zatwierdź przyciskiem lub kliknij ESC")
+                "Przepisz tekst i zatwierdź przyciskiem")
             self.nick = self.mainWin.textEdit.toPlainText()
             self.listener.start()
         elif (used == True):
             self.mainWin.label_2.setText("Użytkownik nie istnieje")
 
     def addNewUser(self):
+        """
+        measurement of parameters for a new user
+        """
         self.mode = 'new'
         used = False
         records = self.selectFromDB()
@@ -106,6 +118,9 @@ class Keyboard(QWidget):
             self.mainWin.label_2.setText("Podaj nazwę użytkownika")
 
     def on_press(self, key):
+        """
+        listener - measurement of parameters 
+        """
         self.time_of_identification
 
         if self.time_of_identification == 0:
@@ -149,6 +164,9 @@ class Keyboard(QWidget):
         self.hold = True
 
     def on_release(self, key):
+        """
+        listener - measurement of parameters 
+        """
         print('{0} release'.format(key))
         self.hold
         self.hold = False
@@ -164,6 +182,9 @@ class Keyboard(QWidget):
             self.words = self.words + 1
 
     def endOfWritting(self):
+        """
+        complete measure
+        """
         if self.mode == 'new':
             self.listener.stop()
             self.time_of_identification
@@ -191,6 +212,9 @@ class Keyboard(QWidget):
             cur.close()
             
     def insertIntoDB(self):
+        """
+        insert into database - measurements.db
+        """
         minPause = min(self.intervals_beetwen_keystrokes)
         maxPause = max(self.intervals_beetwen_keystrokes)
         averagePause = mean(self.intervals_beetwen_keystrokes)
@@ -213,6 +237,10 @@ class Keyboard(QWidget):
         self.mainWin.label_2.setText("Dodano Nowego użytkownika !")
 
     def testLoginSucess(self, dataFromBase):
+        """
+        calculation of the similarity coefficient
+        :return: float probableResult/probableRatioSum: similarity coefficient
+        """
         dataFromLog = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         dataFromLog[1] = min(self.intervals_beetwen_keystrokes)
         dataFromLog[2] = max(self.intervals_beetwen_keystrokes)
@@ -269,19 +297,27 @@ class Keyboard(QWidget):
         wector = ['minPause', 'maxPause', 'averagePause', 'averageHold', 'symbolPerMinut',
                   'wordsPerMinute', 'lossesFromCorrection', 'deletedKeys', 'deletedGroups', 'maxWithoutCorrection']
 
-        plt.figure(figsize=(20,10))
-        plt.bar(wector, probable2Chart)
-        plt.savefig('chart.png')
+        
+        fig, ax = plt.subplots(figsize=(50, 25))
+        
+        
+        # Set tick font size
+        for label in (ax.get_xticklabels() + ax.get_yticklabels()):
+        	label.set_fontsize(10)
+        	
+        ax.bar(wector, probable2Chart)
+        plt.ylabel('Podobieństwo [%]', fontsize=15)
+        plt.show()
 
-
-        scene = QGraphicsScene()
-        scene.addPixmap((QPixmap('chart.png')).scaled(450, 260, QtCore.Qt.KeepAspectRatio))
-        self.mainWin.graphicsView.setScene(scene)
+        
 
         return probableResult/probableRatioSum
 
     def selectFromDB(self):
-
+        """
+        Read all records from database 
+        :return: rows: records
+        """
         con = sqlite3.connect('measurements.db')
         con.row_factory = sqlite3.Row
         cur = con.cursor()
@@ -290,7 +326,7 @@ class Keyboard(QWidget):
         cur.close()
         return rows
 
-
+"""## Main"""
 if __name__ == "__main__":
     app = QApplication([])
     widget = Keyboard()

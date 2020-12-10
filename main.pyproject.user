@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.2, 2020-12-10T21:10:02. -->
+<!-- Written by QtCreator 4.13.2, 2020-12-10T22:30:00. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -169,12 +169,12 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/kamil/Desktop/Ost/main.py</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/kamil/Desktop/Ost/main.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/kamil/Dysk Google/PROJEKTY_SEM7/Biometria/Gui2/main.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/kamil/Dysk Google/PROJEKTY_SEM7/Biometria/Gui2/main.py</value>
     <value type="bool" key="PythonEditor.RunConfiguation.Buffered">false</value>
     <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{1a432bac-86e7-40bf-a5b7-77b04d4549fd}</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\kamil\Desktop\Ost\main.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\kamil\Dysk Google\PROJEKTY_SEM7\Biometria\Gui2\main.py</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
@@ -184,7 +184,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/kamil/Desktop/Ost</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/kamil/Dysk Google/PROJEKTY_SEM7/Biometria/Gui2</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
